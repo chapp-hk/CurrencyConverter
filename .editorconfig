@@ -1,0 +1,22 @@
+# http://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+
+# ktlint
+[*.{kt, kts}]
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+trim_trailing_whitespace = true
+disabled_rules = no-wildcard-imports, import-ordering
+
+# Unix-style newlines with a newline ending every file
+[*.{java, md, xml, aidl, gradle, properties, json, yml, yaml}]
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+trim_trailing_whitespace = true

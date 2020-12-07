@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+    id 'kotlin-kapt'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation project(path: ':domain')
+    implementation deps.kotlin.stdlib
+    implementation deps.timber.core
+    implementation deps.hilt.core
+    kapt deps.hilt.dagger_compiler
+}

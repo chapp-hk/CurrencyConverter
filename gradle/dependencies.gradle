@@ -1,0 +1,39 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies
+ **/
+def deps = [:]
+ext.deps = deps
+
+deps.android = [:]
+deps.android.gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+deps.androidx = [:]
+deps.androidx.core = "androidx.core:core-ktx:$versions.androidx_core"
+deps.androidx.appcompat = "androidx.appcompat:appcompat:$versions.androidx_appcompat"
+deps.androidx.fragment = "androidx.fragment:fragment-ktx:$versions.androidx_fragment"
+deps.androidx.lifecycle_core =  "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidx_lifecycle"
+deps.androidx.lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidx_lifecycle"
+deps.androidx.lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidx_lifecycle"
+
+// Dependencies for Kotlin
+deps.kotlin = [:]
+deps.kotlin.gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+deps.kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+
+deps.material = [:]
+deps.material.core = "com.google.android.material:material:$versions.material"
+
+deps.hilt = [:]
+deps.hilt.gradle_plugin = "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt"
+deps.hilt.core = "com.google.dagger:hilt-android:$versions.hilt"
+deps.hilt.dagger_compiler = "com.google.dagger:hilt-android-compiler:$versions.hilt"
+deps.hilt.lifecycle_viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hilt_jetpack"
+deps.hilt.lifecycle_compiler = "androidx.hilt:hilt-compiler:$versions.hilt_jetpack"
+
+deps.navigation = [:]
+deps.navigation.gradle_plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
+deps.navigation.fragment = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
+deps.navigation.ui = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+
+deps.timber = [:]
+deps.timber.core = "com.jakewharton.timber:timber:$versions.timber"

@@ -1,0 +1,9 @@
+/**
+ * Shared file between builds so that they can all use the same maven repositories.
+ **/
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+}
+
+ext.addRepos = this.&addRepos

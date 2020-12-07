@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.15'
+    id 'com.github.ben-manes.versions' version '0.21.0'
+}
+
+android {
+    compileSdkVersion buildVersions.target_sdk
+    buildToolsVersion buildVersions.build_tool_version
+
+    defaultConfig {
+        applicationId "app.ch.currencyconverter"
+        minSdkVersion buildVersions.min_sdk
+        targetSdkVersion buildVersions.target_sdk
+        versionCode buildVersions.version_code
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(path: ':core')
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
+
+    implementation deps.kotlin.stdlib
+    implementation deps.androidx.core
+    implementation deps.androidx.appcompat
+    implementation deps.androidx.fragment
+
+    implementation deps.material.core
+    implementation deps.timber.core
+
+    implementation deps.navigation.fragment
+    implementation deps.navigation.ui
+
+    implementation deps.hilt.core
+    kapt deps.hilt.dagger_compiler
+    implementation deps.hilt.lifecycle_viewmodel
+    kapt deps.hilt.lifecycle_compiler
+
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
