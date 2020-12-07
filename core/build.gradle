@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlinx-serialization'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -19,9 +20,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", "\"${environment.baseurl_debug}\""
+            buildConfigField "String", "API_KEY", "\"${environment.api_key_debug}\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "BASE_URL", "\"${environment.baseurl_release}\""
+            buildConfigField "String", "API_KEY", "\"${environment.api_key_release}\""
         }
     }
     compileOptions {
@@ -42,11 +50,18 @@ dependencies {
     implementation deps.androidx.appcompat
     implementation deps.material.core
 
+    // Hilt dependencies
     implementation deps.timber.core
     implementation deps.hilt.core
     kapt deps.hilt.dagger_compiler
     implementation deps.hilt.lifecycle_viewmodel
     kapt deps.hilt.lifecycle_compiler
+
+    // Network dependencies
+    implementation deps.retrofit.core
+    implementation deps.okhttp.logging_interceptor
+    implementation deps.retrofit.kotlin_serialization_converter
+    implementation deps.kotlin.serialization_json
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

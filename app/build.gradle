@@ -50,13 +50,21 @@ dependencies {
     implementation deps.material.core
     implementation deps.timber.core
 
+    // Navigation
     implementation deps.navigation.fragment
     implementation deps.navigation.ui
 
+    // Hilt
     implementation deps.hilt.core
     kapt deps.hilt.dagger_compiler
     implementation deps.hilt.lifecycle_viewmodel
     kapt deps.hilt.lifecycle_compiler
+
+    // Network
+    implementation deps.retrofit.core
+    implementation deps.okhttp.logging_interceptor
+    implementation deps.retrofit.kotlin_serialization_converter
+    implementation deps.kotlin.serialization_json
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

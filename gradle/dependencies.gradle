@@ -19,6 +19,8 @@ deps.androidx.lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:
 deps.kotlin = [:]
 deps.kotlin.gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
 deps.kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+deps.kotlin.serialization_gradle_plugin = "org.jetbrains.kotlin:kotlin-serialization:$versions.kotlin"
+deps.kotlin.serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.kotlin_serialization_json"
 
 deps.material = [:]
 deps.material.core = "com.google.android.material:material:$versions.material"
@@ -37,3 +39,10 @@ deps.navigation.ui = "androidx.navigation:navigation-ui-ktx:$versions.navigation
 
 deps.timber = [:]
 deps.timber.core = "com.jakewharton.timber:timber:$versions.timber"
+
+deps.retrofit = [:]
+deps.retrofit.core = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+deps.retrofit.kotlin_serialization_converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.retrofit_kotlin_serialization_converter"
+
+deps.okhttp = [:]
+deps.okhttp.logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor"

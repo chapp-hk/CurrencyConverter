@@ -1,1 +1,7 @@
 ext.environment = [:]
+//Replace the value below with your own base url
+ext.environment.baseurl_debug = "http://api.currencylayer.com/"
+ext.environment.baseurl_release = "place production api url here"
+//Replace the value below with you own api key
+ext.environment.api_key_debug = "844ca662336eda9b09eab0622b5e29af"
+ext.environment.api_key_release = "place production api key here"
