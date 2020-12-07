@@ -6,7 +6,7 @@
     android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:navGraph="@navigation/main_graph"
     app:defaultNavHost="true"
     tools:context=".MainActivity" />
 
-    <!-- TODO: add navigation graph app:navGraph="@navigation/nav_graph" -->
