@@ -15,4 +15,13 @@ dependencies {
     implementation deps.timber.core
     implementation deps.hilt.core
     kapt deps.hilt.dagger_compiler
+
+    // Network
+    implementation deps.retrofit.core
+    implementation deps.kotlin.serialization_json
+
+    // Room
+    implementation deps.room.core
+    kapt deps.room.compiler
+    implementation deps.room.ktx
 }

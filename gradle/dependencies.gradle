@@ -46,3 +46,8 @@ deps.retrofit.kotlin_serialization_converter = "com.jakewharton.retrofit:retrofi
 
 deps.okhttp = [:]
 deps.okhttp.logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor"
+
+deps.room = [:]
+deps.room.core = "androidx.room:room-runtime:$versions.room"
+deps.room.compiler = "androidx.room:room-compiler:$versions.room"
+deps.room.ktx = "androidx.room:room-ktx:$versions.room"
