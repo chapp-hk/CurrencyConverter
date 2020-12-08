@@ -30,13 +30,14 @@ constructor(
     private val _quoteList = MutableStateFlow<List<QuoteListItem>>(listOf())
     val quoteList: StateFlow<List<QuoteListItem>> = _quoteList
 
-    fun getQuotes() {
+    fun getQuotes(amount: Double? = null) {
         viewModelScope.launch {
             val currencyCodes = getCurrencyCodesUsecase.execute()
             val currencyQuotes = getCurrencyQuotesUsecase.execute()
 
             if (currencyCodes.isSuccess() && currencyQuotes.isSuccess()) {
                 mapCurrencyQuotes(
+                    amount,
                     currencyCodes.data().orEmpty(),
                     currencyQuotes.data().orEmpty(),
                 )
@@ -49,13 +50,18 @@ constructor(
         }
     }
 
+    fun onAmountChanged(amountString: CharSequence) {
+        getQuotes(amountString.toString().toDoubleOrNull())
+    }
+
     private fun mapCurrencyQuotes(
+        amount: Double?,
         codes: List<CurrencyCode>,
         quotes: Map<String, Double>,
     ) {
         codes.map {
             val srcQuote = quotes["$defaultCode${_selectedCode.value}"] ?: 1.0
-            val quote = quotes["$defaultCode${it.code}"]?.div(srcQuote)
+            val quote = quotes["$defaultCode${it.code}"]?.div(srcQuote)?.times(amount ?: 1.0)
             QuoteListItem(it.code, it.description, quote.toString())
         }.let {
             _quoteList.value = it
