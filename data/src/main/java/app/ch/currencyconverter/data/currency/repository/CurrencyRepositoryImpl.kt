@@ -26,19 +26,19 @@ constructor(
     }
 
     private suspend fun getFromRemote(): Result<List<CurrencyCode>, Error> {
-        return try {
+        return runCatching {
             currencyApi.getCurrencies().let { response ->
                 if (response.success) {
                     response.currencies
                         .map { CurrencyEntity(it.key, it.value) }
-                        .apply { currencyDao.insertAll(this) }
+                        .also { currencyDao.insertAll(it) }
                         .map { CurrencyCode(it.code, it.description) }
                         .let { Result.Success(it) }
                 } else {
                     Result.Failure(Error.ResponseError(response.errorResponse.code))
                 }
             }
-        } catch (throwable: Throwable) {
+        }.getOrElse {
             Result.Failure(Error.NetworkError)
         }
     }

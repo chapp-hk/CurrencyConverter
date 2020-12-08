@@ -16,6 +16,7 @@ import org.junit.Test
 import strikt.api.expectThat
 import strikt.assertions.isA
 import strikt.assertions.isEqualTo
+import java.math.BigDecimal
 
 class QuoteRepositoryImplTest {
 
@@ -54,9 +55,9 @@ class QuoteRepositoryImplTest {
         runBlocking {
             val result = quoteRepository.getCurrencyQuotes()
 
-            expectThat(result).isA<Result.Success<Map<String, Double>>>()
+            expectThat(result).isA<Result.Success<Map<String, BigDecimal>>>()
                 .get { data }
-                .isEqualTo(mapOf("mapping" to 1.0))
+                .isEqualTo(mapOf("mapping" to BigDecimal(1.0)))
         }
 
         coVerifySequence {
@@ -84,9 +85,9 @@ class QuoteRepositoryImplTest {
         runBlocking {
             val result = quoteRepository.getCurrencyQuotes()
 
-            expectThat(result).isA<Result.Success<Map<String, Double>>>()
+            expectThat(result).isA<Result.Success<Map<String, BigDecimal>>>()
                 .get { data }
-                .isEqualTo(mapOf("mapping" to 1.0))
+                .isEqualTo(mapOf("mapping" to BigDecimal(1.0)))
         }
 
         coVerifySequence {
@@ -153,9 +154,9 @@ class QuoteRepositoryImplTest {
         runBlocking {
             val result = quoteRepository.getCurrencyQuotes()
 
-            expectThat(result).isA<Result.Success<Map<String, Double>>>()
+            expectThat(result).isA<Result.Success<Map<String, BigDecimal>>>()
                 .get { data }
-                .isEqualTo(mapOf("mapping" to 3.0))
+                .isEqualTo(mapOf("mapping" to BigDecimal(3.0)))
         }
 
         coVerify(exactly = 0) {

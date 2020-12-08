@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.ch.currencyconverter.core.orDefault
 import app.ch.currencyconverter.domain.base.Error
 import app.ch.currencyconverter.domain.base.data
 import app.ch.currencyconverter.domain.base.error
@@ -15,6 +16,8 @@ import app.ch.currencyconverter.domain.quote.usecase.GetCurrencyQuotesUsecase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class QuoteViewModel @ViewModelInject
 constructor(
@@ -30,7 +33,7 @@ constructor(
     private val _quoteList = MutableStateFlow<List<QuoteListItem>>(listOf())
     val quoteList: StateFlow<List<QuoteListItem>> = _quoteList
 
-    fun getQuotes(amount: Double? = null) {
+    fun getQuotes(amount: BigDecimal? = null) {
         viewModelScope.launch {
             val currencyCodes = getCurrencyCodesUsecase.execute()
             val currencyQuotes = getCurrencyQuotesUsecase.execute()
@@ -51,18 +54,23 @@ constructor(
     }
 
     fun onAmountChanged(amountString: CharSequence) {
-        getQuotes(amountString.toString().toDoubleOrNull())
+        getQuotes(amountString.toString().toBigDecimalOrNull())
     }
 
     private fun mapCurrencyQuotes(
-        amount: Double?,
+        amount: BigDecimal?,
         codes: List<CurrencyCode>,
-        quotes: Map<String, Double>,
+        quotes: Map<String, BigDecimal>,
     ) {
         codes.map {
-            val srcQuote = quotes["$defaultCode${_selectedCode.value}"] ?: 1.0
-            val quote = quotes["$defaultCode${it.code}"]?.div(srcQuote)?.times(amount ?: 1.0)
-            QuoteListItem(it.code, it.description, quote.toString())
+            val quote = quotes["$defaultCode${it.code}"].orDefault() /
+                    quotes["$defaultCode${_selectedCode.value}"].orDefault() *
+                    amount.orDefault()
+            QuoteListItem(
+                it.code,
+                it.description,
+                quote.setScale(5, RoundingMode.CEILING).stripTrailingZeros().toString()
+            )
         }.let {
             _quoteList.value = it
         }
@@ -74,7 +82,7 @@ constructor(
     ) {
         if (codesError != null) {
 
-        } else if(quotesError != null) {
+        } else if (quotesError != null) {
 
         }
     }
