@@ -1,5 +1,4 @@
 plugins {
-    id 'java-library'
     id 'kotlin'
     id 'kotlin-kapt'
     id 'kotlinx-serialization'
@@ -8,6 +7,12 @@ plugins {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+compileKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 }
 
 dependencies {
@@ -25,4 +30,8 @@ dependencies {
     implementation deps.room.core
     kapt deps.room.compiler
     implementation deps.room.ktx
+
+    testImplementation deps.test.junit
+    testImplementation deps.test.mockk
+    testImplementation deps.test.strikt
 }

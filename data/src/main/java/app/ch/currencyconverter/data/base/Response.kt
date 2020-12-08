@@ -10,11 +10,11 @@ abstract class Response(
     val success: Boolean = false,
 
     @SerialName("error")
-    val error: Error = Error(),
+    val errorResponse: ErrorResponse = ErrorResponse(),
 )
 
 @Serializable
-data class Error(
+data class ErrorResponse(
 
     @SerialName("code")
     val code: Int = 0,

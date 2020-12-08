@@ -51,3 +51,8 @@ deps.room = [:]
 deps.room.core = "androidx.room:room-runtime:$versions.room"
 deps.room.compiler = "androidx.room:room-compiler:$versions.room"
 deps.room.ktx = "androidx.room:room-ktx:$versions.room"
+
+deps.test = [:]
+deps.test.junit = "junit:junit:$versions.junit"
+deps.test.mockk = "io.mockk:mockk:$versions.mockk"
+deps.test.strikt = "io.strikt:strikt-core:$versions.strikt"
