@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CurrencyConverter</string>
+    <string name="btn_select">Select Currency</string>
+    <string name="hint_amount">Input Amount</string>
 </resources>

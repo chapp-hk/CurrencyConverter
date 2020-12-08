@@ -1,8 +1,8 @@
 package app.ch.currencyconverter.data.quote.repository
 
-import app.ch.currencyconverter.data.quote.local.QuoteLocalStore
 import app.ch.currencyconverter.data.quote.local.QuoteDao
 import app.ch.currencyconverter.data.quote.local.QuoteEntity
+import app.ch.currencyconverter.data.quote.local.QuoteLocalStore
 import app.ch.currencyconverter.data.quote.remote.QuoteApi
 import app.ch.currencyconverter.domain.base.Error
 import app.ch.currencyconverter.domain.base.Result

@@ -35,6 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
@@ -43,9 +46,11 @@ dependencies {
     implementation project(path: ':data')
 
     implementation deps.kotlin.stdlib
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
     implementation deps.androidx.core
     implementation deps.androidx.appcompat
     implementation deps.androidx.fragment
+    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
 
     implementation deps.material.core
     implementation deps.timber.core
