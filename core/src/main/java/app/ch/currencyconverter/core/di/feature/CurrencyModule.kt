@@ -1,6 +1,6 @@
 package app.ch.currencyconverter.core.di.feature
 
-import app.ch.currencyconverter.core.di.localstore.DaoProvider
+import app.ch.currencyconverter.core.localstore.DaoProvider
 import app.ch.currencyconverter.data.currency.local.CurrencyDao
 import app.ch.currencyconverter.data.currency.remote.CurrencyApi
 import app.ch.currencyconverter.data.currency.repository.CurrencyRepositoryImpl
