@@ -38,11 +38,10 @@ class QuoteRepositoryImplTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        coEvery { quoteResponse.timestamp } returns 111L
         coEvery { quoteApi.getCurrencies() } returns quoteResponse
         coEvery { quoteDao.deleteAll() } just Runs
         coEvery { quoteDao.insertAll(any()) } just Runs
-        coEvery { localStore.saveLastQuoteTime(any()) } just Runs
+        coEvery { localStore.saveLastQuoteTimeMillis(any()) } just Runs
         quoteRepository = QuoteRepositoryImpl(quoteApi, quoteDao, localStore)
     }
 
@@ -63,7 +62,7 @@ class QuoteRepositoryImplTest {
         coVerifySequence {
             quoteDao.getAll()
             quoteApi.getCurrencies()
-            localStore.saveLastQuoteTime(111L)
+            localStore.saveLastQuoteTimeMillis(any())
             quoteDao.deleteAll()
             quoteDao.insertAll(
                 mapOf("mapping" to 1.0)
@@ -94,7 +93,7 @@ class QuoteRepositoryImplTest {
             quoteDao.getAll()
             localStore.isQuoteExpired()
             quoteApi.getCurrencies()
-            localStore.saveLastQuoteTime(111L)
+            localStore.saveLastQuoteTimeMillis(any())
             quoteDao.deleteAll()
             quoteDao.insertAll(
                 mapOf("mapping" to 1.0)
@@ -120,7 +119,7 @@ class QuoteRepositoryImplTest {
         }
 
         coVerify(exactly = 0) {
-            localStore.saveLastQuoteTime(any())
+            localStore.saveLastQuoteTimeMillis(any())
             quoteDao.deleteAll()
             quoteDao.insertAll(any())
         }
@@ -140,7 +139,7 @@ class QuoteRepositoryImplTest {
         }
 
         coVerify(exactly = 0) {
-            localStore.saveLastQuoteTime(any())
+            localStore.saveLastQuoteTimeMillis(any())
             quoteDao.deleteAll()
             quoteDao.insertAll(any())
         }
@@ -161,7 +160,7 @@ class QuoteRepositoryImplTest {
 
         coVerify(exactly = 0) {
             quoteApi.getCurrencies()
-            localStore.saveLastQuoteTime(any())
+            localStore.saveLastQuoteTimeMillis(any())
             quoteDao.deleteAll()
             quoteDao.insertAll(any())
         }

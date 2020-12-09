@@ -20,7 +20,6 @@ constructor(
 
     override suspend fun getCurrencyQuotes(): Result<Map<String, BigDecimal>, Error> {
         return quoteDao.getAll().let {
-            localStore.isQuoteExpired()
             if (it.isEmpty() || localStore.isQuoteExpired()) {
                 getFromRemote()
             } else {
@@ -47,7 +46,7 @@ constructor(
     }
 
     private suspend fun persistDataToLocal(response: QuoteResponse) {
-        localStore.saveLastQuoteTime(response.timestamp)
+        localStore.saveLastQuoteTimeMillis(System.currentTimeMillis())
         quoteDao.apply {
             deleteAll()
             insertAll(response.quotes.map { QuoteEntity(it.key, it.value) })

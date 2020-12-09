@@ -2,6 +2,7 @@ package app.ch.currencyconverter.core.localstore
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import app.ch.currencyconverter.core.Constants.PREF_KEY_LAST_QUOTE_TIME
 import app.ch.currencyconverter.data.quote.local.QuoteLocalStore
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -11,14 +12,13 @@ constructor(
     private val sharedPreferences: SharedPreferences
 ) : QuoteLocalStore {
 
-    override fun saveLastQuoteTime(time: Long) {
-        sharedPreferences.edit { putLong("pref_last_quote_time", time) }
+    override fun saveLastQuoteTimeMillis(time: Long) {
+        sharedPreferences.edit { putLong(PREF_KEY_LAST_QUOTE_TIME, time) }
     }
 
     override fun isQuoteExpired(): Boolean {
-        return sharedPreferences.getLong("pref_last_quote_time", 0L).let {
-            TimeUnit.SECONDS.toMillis(it) - System.currentTimeMillis() >
-                    TimeUnit.MINUTES.toMillis(30)
+        return sharedPreferences.getLong(PREF_KEY_LAST_QUOTE_TIME, 0L).let {
+            System.currentTimeMillis() - it > TimeUnit.MINUTES.toMillis(30)
         }
     }
 }
