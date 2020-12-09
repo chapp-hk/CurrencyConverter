@@ -3,6 +3,7 @@ package app.ch.currencyconverter.quote
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -20,12 +21,13 @@ class QuoteFragment : Fragment(R.layout.fragment_quote) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setFragmentResultListener("currencyCode", ::handleFragmentResult)
+
         lifecycleScope.launchWhenCreated {
             viewModel.apply {
                 getQuotes()
-                quoteList.collectLatest {
-                    adapter.submitList(it)
-                }
+                quoteList.collectLatest(adapter::submitList)
             }
         }
     }
@@ -42,5 +44,11 @@ class QuoteFragment : Fragment(R.layout.fragment_quote) {
 
     fun navigateToCurrency() {
         findNavController().navigate(R.id.to_currency)
+    }
+
+    private fun handleFragmentResult(requestKey: String, bundle: Bundle) {
+        when (requestKey) {
+            "currencyCode" -> viewModel.updateCurrencyCode(bundle.getString("code", ""))
+        }
     }
 }

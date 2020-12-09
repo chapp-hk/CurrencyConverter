@@ -26,6 +26,7 @@ constructor(
 ) : ViewModel() {
 
     private val defaultCode = "USD"
+    private var amount: BigDecimal? = null
 
     private val _selectedCode = MutableLiveData(defaultCode)
     val selectedCode: LiveData<String> = _selectedCode
@@ -33,14 +34,13 @@ constructor(
     private val _quoteList = MutableStateFlow<List<QuoteListItem>>(listOf())
     val quoteList: StateFlow<List<QuoteListItem>> = _quoteList
 
-    fun getQuotes(amount: BigDecimal? = null) {
+    fun getQuotes() {
         viewModelScope.launch {
             val currencyCodes = getCurrencyCodesUsecase.execute()
             val currencyQuotes = getCurrencyQuotesUsecase.execute()
 
             if (currencyCodes.isSuccess() && currencyQuotes.isSuccess()) {
-                mapCurrencyQuotes(
-                    amount,
+                updateCurrencyQuotes(
                     currencyCodes.data().orEmpty(),
                     currencyQuotes.data().orEmpty(),
                 )
@@ -53,18 +53,23 @@ constructor(
         }
     }
 
-    fun onAmountChanged(amountString: CharSequence) {
-        getQuotes(amountString.toString().toBigDecimalOrNull())
+    fun updateAmount(amountString: CharSequence) {
+        amount = amountString.toString().toBigDecimalOrNull()
+        getQuotes()
     }
 
-    private fun mapCurrencyQuotes(
-        amount: BigDecimal?,
+    fun updateCurrencyCode(code: String) {
+        _selectedCode.value = code
+        getQuotes()
+    }
+
+    private fun updateCurrencyQuotes(
         codes: List<CurrencyCode>,
         quotes: Map<String, BigDecimal>,
     ) {
         codes.map {
-            val quote = quotes["$defaultCode${it.code}"].orDefault() /
-                    quotes["$defaultCode${_selectedCode.value}"].orDefault() *
+            val quote = quotes[getQuoteKey(it.code)].orDefault() /
+                    quotes[getQuoteKey(_selectedCode.value)].orDefault() *
                     amount.orDefault()
             QuoteListItem(
                 it.code,
@@ -85,5 +90,9 @@ constructor(
         } else if (quotesError != null) {
 
         }
+    }
+
+    private fun getQuoteKey(code: String?): String  {
+        return "$defaultCode$code"
     }
 }
