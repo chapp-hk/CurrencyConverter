@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import app.ch.currencyconverter.R
 import app.ch.currencyconverter.core.recyclerview.RecyclerViewAdapter
 import app.ch.currencyconverter.databinding.FragmentQuoteBinding
@@ -20,11 +21,11 @@ class QuoteFragment : Fragment(R.layout.fragment_quote) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenCreated {
-
-            viewModel.getQuotes()
-
-            viewModel.quoteList.collectLatest {
-                adapter.submitList(it)
+            viewModel.apply {
+                getQuotes()
+                quoteList.collectLatest {
+                    adapter.submitList(it)
+                }
             }
         }
     }
@@ -33,8 +34,13 @@ class QuoteFragment : Fragment(R.layout.fragment_quote) {
         super.onViewCreated(view, savedInstanceState)
         FragmentQuoteBinding.bind(view).also {
             it.lifecycleOwner = viewLifecycleOwner
+            it.fragment = this
             it.viewModel = viewModel
             it.recyclerView.adapter = adapter
         }
+    }
+
+    fun navigateToCurrency() {
+        findNavController().navigate(R.id.to_currency)
     }
 }

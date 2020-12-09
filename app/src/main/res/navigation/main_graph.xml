@@ -9,5 +9,16 @@
         android:id="@+id/quote"
         android:name="app.ch.currencyconverter.quote.QuoteFragment"
         android:label="Quote"
-        tools:layout="@layout/fragment_quote" />
+        tools:layout="@layout/fragment_quote">
+
+        <action
+            android:id="@+id/to_currency"
+            app:destination="@id/currency" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/currency"
+        android:name="app.ch.currencyconverter.currency.CurrencyDialog"
+        android:label="Currency"
+        tools:layout="@layout/dialog_currency" />
 </navigation>

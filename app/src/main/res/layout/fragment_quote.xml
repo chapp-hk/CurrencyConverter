@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="fragment"
+            type="app.ch.currencyconverter.quote.QuoteFragment" />
+
+        <variable
             name="viewModel"
             type="app.ch.currencyconverter.quote.QuoteViewModel" />
     </data>
@@ -41,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/editText"
             android:layout_alignParentEnd="true"
+            android:onClick="@{() -> fragment.navigateToCurrency()}"
             android:text="@string/btn_select" />
 
         <androidx.recyclerview.widget.RecyclerView
