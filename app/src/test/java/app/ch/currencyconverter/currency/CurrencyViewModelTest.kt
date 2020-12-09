@@ -34,12 +34,12 @@ class CurrencyViewModelTest {
 
     @Test
     fun `get currencies`() {
-        coEvery { getCurrencyCodesUsecase.execute() } returns Result.Success(
-            listOf(
-                CurrencyCode("HKD", "Hong Kong Dollar"),
-                CurrencyCode("USD", "US Dollar"),
-            )
+        val codes = listOf(
+            CurrencyCode("HKD", "Hong Kong Dollar"),
+            CurrencyCode("USD", "US Dollar"),
         )
+
+        coEvery { getCurrencyCodesUsecase.execute() } returns Result.Success(codes)
 
         viewModel.getCurrencies()
 
@@ -47,13 +47,10 @@ class CurrencyViewModelTest {
             getCurrencyCodesUsecase.execute()
         }
 
-        expectThat(viewModel.currencyList)
-            .get { value }
-            .assertThat("assert list size") {
-                it.size == 2
-            }.assertThat("assert values") {
-                it[0].run { code == "HKD" && description == "Hong Kong Dollar" } &&
-                        it[1].run { code == "USD" && description == "US Dollar" }
+        viewModel.currencyList.value.forEachIndexed { index, item ->
+            expectThat(item).assertThat("assert values") {
+                codes[index].run { code == it.code && description == it.description }
             }
+        }
     }
 }

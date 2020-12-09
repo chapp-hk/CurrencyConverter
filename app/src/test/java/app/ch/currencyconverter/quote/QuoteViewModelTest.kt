@@ -21,7 +21,6 @@ import org.junit.Rule
 import org.junit.Test
 import strikt.api.expectThat
 import strikt.assertions.isEmpty
-import strikt.assertions.isNotEmpty
 
 class QuoteViewModelTest {
 
@@ -38,13 +37,15 @@ class QuoteViewModelTest {
     @MockK
     private lateinit var getCurrencyQuotesUsecase: GetCurrencyQuotesUsecase
 
+    private val currencyConverter = CurrencyConverter()
     private lateinit var viewModel: QuoteViewModel
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
 
-        viewModel = QuoteViewModel(getCurrencyCodesUsecase, getCurrencyQuotesUsecase)
+        viewModel =
+            QuoteViewModel(getCurrencyCodesUsecase, getCurrencyQuotesUsecase, currencyConverter)
     }
 
     @Test
@@ -92,20 +93,20 @@ class QuoteViewModelTest {
 
     @Test
     fun `get quotes and currencies success`() {
-        coEvery { getCurrencyCodesUsecase.execute() } returns Result.Success(
-            listOf(
-                CurrencyCode("HKD", "Hong Kong Dollar"),
-                CurrencyCode("JPY", "Japan Yen"),
-            )
+        val codes = listOf(
+            CurrencyCode("HKD", "Hong Kong Dollar"),
+            CurrencyCode("JPY", "Japan Yen"),
         )
-        coEvery { getCurrencyQuotesUsecase.execute() } returns Result.Success(
-            mapOf(
-                "USDHKD" to 7.75.toBigDecimal(),
-                "USDJPY" to 104.26.toBigDecimal(),
-            )
+        val quotes = mapOf(
+            "USDHKD" to 7.75.toBigDecimal(),
+            "USDJPY" to 104.26.toBigDecimal(),
         )
 
-        viewModel.getQuotes()
+        coEvery { getCurrencyCodesUsecase.execute() } returns Result.Success(codes)
+        coEvery { getCurrencyQuotesUsecase.execute() } returns Result.Success(quotes)
+
+        viewModel.amount.value = "3"
+        viewModel.updateCurrencyCode("HKD")
 
         coVerifySequence {
             getCurrencyCodesUsecase.execute()
@@ -116,34 +117,18 @@ class QuoteViewModelTest {
             .test()
             .assertNoValue()
 
-        expectThat(viewModel.quoteList.value)
-            .isNotEmpty()
-    }
-
-    @Test
-    fun `update currency code should refresh currency quotes`() {
-        coEvery { getCurrencyCodesUsecase.execute() } returns Result.Success(
-            listOf(
-                CurrencyCode("HKD", "Hong Kong Dollar"),
-                CurrencyCode("JPY", "Japan Yen"),
-            )
-        )
-        coEvery { getCurrencyQuotesUsecase.execute() } returns Result.Success(
-            mapOf(
-                "USDHKD" to 7.75.toBigDecimal(),
-                "USDJPY" to 104.26.toBigDecimal(),
-            )
-        )
-
-        viewModel.updateCurrencyCode("HKD")
-
-        coVerifySequence {
-            getCurrencyCodesUsecase.execute()
-            getCurrencyQuotesUsecase.execute()
-        }
-
         viewModel.selectedCode
             .test()
             .assertValue("HKD")
+
+        viewModel.quoteList.value.forEach { item ->
+            expectThat(item).assertThat("assert quote value") {
+                it.quote == currencyConverter.execute(
+                    quotes["USD${it.code}"],
+                    quotes["USDHKD"],
+                    3.toBigDecimal()
+                )
+            }
+        }
     }
 }

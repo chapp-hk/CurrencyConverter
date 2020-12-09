@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.ch.currencyconverter.core.Constants.ERROR_NETWORK
 import app.ch.currencyconverter.core.lifecycle.OneOffEvent
-import app.ch.currencyconverter.core.orDefault
 import app.ch.currencyconverter.domain.base.Error
 import app.ch.currencyconverter.domain.base.Result
 import app.ch.currencyconverter.domain.currency.entity.CurrencyCode
@@ -17,12 +16,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
-import java.math.RoundingMode
 
 class QuoteViewModel @ViewModelInject
 constructor(
     private val getCurrencyCodesUsecase: GetCurrencyCodesUsecase,
     private val getCurrencyQuotesUsecase: GetCurrencyQuotesUsecase,
+    private val currencyConverter: CurrencyConverter,
 ) : ViewModel() {
 
     private val defaultCode = "USD"
@@ -67,15 +66,18 @@ constructor(
         codes: List<CurrencyCode>,
         quotes: Map<String, BigDecimal>,
     ) {
-        codes.map {
-            val quote = quotes[getQuoteKey(it.code)].orDefault() /
-                    quotes[getQuoteKey(_selectedCode.value)].orDefault() *
-                    amount.value?.toBigDecimalOrNull().orDefault()
-            QuoteListItem(
-                it.code,
-                it.description,
-                quote.setScale(5, RoundingMode.CEILING).stripTrailingZeros().toString()
-            )
+        codes.map { currencyCode ->
+            currencyConverter.execute(
+                quotes[getQuoteKey(currencyCode.code)],
+                quotes[getQuoteKey(_selectedCode.value)],
+                amount.value?.toBigDecimalOrNull(),
+            ).let {
+                QuoteListItem(
+                    currencyCode.code,
+                    currencyCode.description,
+                    it,
+                )
+            }
         }.let {
             _quoteList.value = it
         }
