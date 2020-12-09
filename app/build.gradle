@@ -46,11 +46,11 @@ dependencies {
     implementation project(path: ':data')
 
     implementation deps.kotlin.stdlib
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation deps.kotlin.coroutines_android
     implementation deps.androidx.core
     implementation deps.androidx.appcompat
     implementation deps.androidx.fragment
-    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
+    implementation deps.androidx.constraint_layout
 
     implementation deps.material.core
     implementation deps.timber.core
@@ -74,7 +74,13 @@ dependencies {
     // Room
     implementation deps.room.core
 
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation deps.test.junit
+    testImplementation deps.test.mockk
+    testImplementation deps.test.strikt
+    testImplementation deps.androidx.core_test
+    testImplementation deps.kotlin.coroutines_test
+    testImplementation deps.test.livedata
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

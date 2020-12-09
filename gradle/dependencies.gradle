@@ -9,8 +9,10 @@ deps.android.gradle_plugin = "com.android.tools.build:gradle:$versions.android_g
 
 deps.androidx = [:]
 deps.androidx.core = "androidx.core:core-ktx:$versions.androidx_core"
+deps.androidx.core_test = "androidx.arch.core:core-testing:$versions.androidx_core_test"
 deps.androidx.appcompat = "androidx.appcompat:appcompat:$versions.androidx_appcompat"
 deps.androidx.fragment = "androidx.fragment:fragment-ktx:$versions.androidx_fragment"
+deps.androidx.constraint_layout = "androidx.constraintlayout:constraintlayout:$versions.androidx_constraint_layout"
 deps.androidx.lifecycle_core =  "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidx_lifecycle"
 deps.androidx.lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidx_lifecycle"
 deps.androidx.lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidx_lifecycle"
@@ -21,6 +23,8 @@ deps.kotlin.gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions
 deps.kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 deps.kotlin.serialization_gradle_plugin = "org.jetbrains.kotlin:kotlin-serialization:$versions.kotlin"
 deps.kotlin.serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.kotlin_serialization_json"
+deps.kotlin.coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlin_coroutines"
+deps.kotlin.coroutines_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.kotlin_coroutines_test"
 
 deps.material = [:]
 deps.material.core = "com.google.android.material:material:$versions.material"
@@ -56,3 +60,4 @@ deps.test = [:]
 deps.test.junit = "junit:junit:$versions.junit"
 deps.test.mockk = "io.mockk:mockk:$versions.mockk"
 deps.test.strikt = "io.strikt:strikt-core:$versions.strikt"
+deps.test.livedata = "com.jraska.livedata:testing-ktx:$versions.test_livedata"

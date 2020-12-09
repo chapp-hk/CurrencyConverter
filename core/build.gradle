@@ -72,7 +72,9 @@ dependencies {
     kapt deps.room.compiler
     implementation deps.room.ktx
 
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation deps.test.junit
+    testImplementation deps.test.mockk
+    testImplementation deps.test.strikt
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

@@ -20,6 +20,7 @@ constructor(
 
     override suspend fun getCurrencyQuotes(): Result<Map<String, BigDecimal>, Error> {
         return quoteDao.getAll().let {
+            localStore.isQuoteExpired()
             if (it.isEmpty() || localStore.isQuoteExpired()) {
                 getFromRemote()
             } else {
