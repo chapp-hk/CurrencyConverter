@@ -12,7 +12,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_round"
+        android:layout_margin="1dp"
+        android:padding="@dimen/spacing">
 
         <TextView
             android:id="@+id/tvCode"
@@ -40,6 +43,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@{listItem.quote}"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tvCode"
             tools:text="1234" />
     </androidx.constraintlayout.widget.ConstraintLayout>

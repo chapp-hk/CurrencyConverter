@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CurrencyConverter</string>
     <string name="btn_select">Select Currency</string>
-    <string name="hint_amount">Input Amount</string>
+    <string name="hint_amount">Input Amount (Default = 1.0)</string>
+    <string name="error_network">Network Error</string>
+    <string name="error_api">Api Error</string>
 </resources>

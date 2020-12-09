@@ -24,10 +24,11 @@
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:afterTextChanged="@{() -> viewModel.getQuotes()}"
             android:autofillHints="@string/hint_amount"
             android:hint="@string/hint_amount"
             android:inputType="numberDecimal"
-            android:onTextChanged="@{(text, s, b, c) -> viewModel.updateAmount(text)}" />
+            android:text="@={viewModel.amount}" />
 
         <TextView
             android:id="@+id/tvSelectCurrency"

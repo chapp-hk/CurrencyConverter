@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.ch.currencyconverter.core.Constants.ERROR_NETWORK
+import app.ch.currencyconverter.core.lifecycle.OneOffEvent
 import app.ch.currencyconverter.core.orDefault
 import app.ch.currencyconverter.domain.base.Error
-import app.ch.currencyconverter.domain.base.data
-import app.ch.currencyconverter.domain.base.error
-import app.ch.currencyconverter.domain.base.isSuccess
+import app.ch.currencyconverter.domain.base.Result
 import app.ch.currencyconverter.domain.currency.entity.CurrencyCode
 import app.ch.currencyconverter.domain.currency.usecase.GetCurrencyCodesUsecase
 import app.ch.currencyconverter.domain.quote.usecase.GetCurrencyQuotesUsecase
@@ -26,41 +26,41 @@ constructor(
 ) : ViewModel() {
 
     private val defaultCode = "USD"
-    private var amount: BigDecimal? = null
+
+    val amount = MutableLiveData<String>()
 
     private val _selectedCode = MutableLiveData(defaultCode)
     val selectedCode: LiveData<String> = _selectedCode
 
+    private val _errorEvent = MutableLiveData<OneOffEvent<Int>>()
+    val errorEvent: LiveData<OneOffEvent<Int>> = _errorEvent
+
     private val _quoteList = MutableStateFlow<List<QuoteListItem>>(listOf())
     val quoteList: StateFlow<List<QuoteListItem>> = _quoteList
-
-    fun getQuotes() {
-        viewModelScope.launch {
-            val currencyCodes = getCurrencyCodesUsecase.execute()
-            val currencyQuotes = getCurrencyQuotesUsecase.execute()
-
-            if (currencyCodes.isSuccess() && currencyQuotes.isSuccess()) {
-                updateCurrencyQuotes(
-                    currencyCodes.data().orEmpty(),
-                    currencyQuotes.data().orEmpty(),
-                )
-            } else {
-                handleError(
-                    currencyCodes.error(),
-                    currencyQuotes.error(),
-                )
-            }
-        }
-    }
-
-    fun updateAmount(amountString: CharSequence) {
-        amount = amountString.toString().toBigDecimalOrNull()
-        getQuotes()
-    }
 
     fun updateCurrencyCode(code: String) {
         _selectedCode.value = code
         getQuotes()
+    }
+
+    fun getQuotes() {
+        viewModelScope.launch {
+            getCurrencyCodesUsecase.execute().let {
+                when (it) {
+                    is Result.Success -> getCurrencyQuotes(it.data)
+                    is Result.Failure -> handleError(it.error)
+                }
+            }
+        }
+    }
+
+    private suspend fun getCurrencyQuotes(codes: List<CurrencyCode>) {
+        getCurrencyQuotesUsecase.execute().let {
+            when (it) {
+                is Result.Success -> updateCurrencyQuotes(codes, it.data)
+                is Result.Failure -> handleError(it.error)
+            }
+        }
     }
 
     private fun updateCurrencyQuotes(
@@ -70,7 +70,7 @@ constructor(
         codes.map {
             val quote = quotes[getQuoteKey(it.code)].orDefault() /
                     quotes[getQuoteKey(_selectedCode.value)].orDefault() *
-                    amount.orDefault()
+                    amount.value?.toBigDecimalOrNull().orDefault()
             QuoteListItem(
                 it.code,
                 it.description,
@@ -81,18 +81,16 @@ constructor(
         }
     }
 
-    private fun handleError(
-        codesError: Error?,
-        quotesError: Error?,
-    ) {
-        if (codesError != null) {
-
-        } else if (quotesError != null) {
-
+    private fun handleError(error: Error) {
+        when (error) {
+            is Error.NetworkError -> ERROR_NETWORK
+            is Error.ResponseError -> error.errorCode
+        }.let {
+            _errorEvent.value = OneOffEvent(it)
         }
     }
 
-    private fun getQuoteKey(code: String?): String  {
+    private fun getQuoteKey(code: String?): String {
         return "$defaultCode$code"
     }
 }
