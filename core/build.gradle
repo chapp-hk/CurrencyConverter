@@ -15,7 +15,6 @@ android {
         targetSdkVersion buildVersions.target_sdk
         versionCode buildVersions.version_code
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 

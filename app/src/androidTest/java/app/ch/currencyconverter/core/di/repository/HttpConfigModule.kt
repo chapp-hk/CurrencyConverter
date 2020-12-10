@@ -1,6 +1,5 @@
-package app.ch.currencyconverter.core.di
+package app.ch.currencyconverter.core.di.repository
 
-import app.ch.currencyconverter.core.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,12 +13,12 @@ class HttpConfigModule {
     @Provides
     fun providesHttpLogging(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.NONE
+            level = HttpLoggingInterceptor.Level.BODY
         }
     }
 
     @Provides
     fun providesBaseUrl(): String {
-        return BuildConfig.BASE_URL
+        return "http://localhost:8080"
     }
 }

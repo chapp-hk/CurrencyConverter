@@ -19,7 +19,7 @@ android {
         versionCode buildVersions.version_code
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "app.ch.currencyconverter.CustomTestRunner"
     }
 
     buildTypes {
@@ -37,6 +37,12 @@ android {
     }
     buildFeatures {
         dataBinding = true
+    }
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
     }
 }
 
@@ -81,6 +87,18 @@ dependencies {
     testImplementation deps.kotlin.coroutines_test
     testImplementation deps.test.livedata
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation "androidx.test:core-ktx:1.3.0"
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.2"
+    androidTestImplementation "androidx.test:rules:1.3.0"
+    // For instrumented tests.
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    // ...with Kotlin.
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.29.1-alpha'
+//    // ...with Java.
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.29.1-alpha'
+    debugImplementation "androidx.fragment:fragment-testing:1.3.0-beta01"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.0"
+    androidTestImplementation "com.jakewharton.espresso:okhttp3-idling-resource:1.0.0"
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.2"
 }

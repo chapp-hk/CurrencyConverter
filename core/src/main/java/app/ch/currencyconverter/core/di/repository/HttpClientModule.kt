@@ -58,9 +58,10 @@ class HttpClientModule {
     internal fun providesRetrofit(
         converterFactory: Converter.Factory,
         okHttpClient: OkHttpClient,
+        baseUrl: String,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(converterFactory)
             .client(okHttpClient)
             .build()
