@@ -39,7 +39,7 @@ Since the requirement is to use free apis. It doesn't support `source` and `curr
 
 So we have to fetch data from `/list` and `/live` endpoints then calculate exchange rates at client side.
 
-The calculattion will be:
+The calculation will be:
 `source rate / target rate * amount`
 
 We need to loop through all items in `/list` and use each currency code to search `source rate` in `/live`
