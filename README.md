@@ -18,6 +18,10 @@ A simple Android app that use https://currencylayer.com/documentation apis to ca
 - Android 5.0 (API Level 21) or above
 - Network connection
 
+## Environment Setting
+
+If you want to use your own API key, please modify [gradle/environment.gradle](./gradle/environment.gradle)
+
 ## Permission
 
 - `android.permission.INTERNET`: for fetching api
