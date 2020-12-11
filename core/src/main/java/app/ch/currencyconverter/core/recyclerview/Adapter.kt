@@ -8,13 +8,13 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.ch.currencyconverter.core.BR
 
 /**
  * Reduce RecyclerView Adapter boilerplate by using DataBinding
  */
 
 class RecyclerViewAdapter<T : ListItem>(
+    private val itemVariableId: Int,
     callback: DiffUtil.ItemCallback<T> = SimpleDiffUtilItemCallback(),
 ) : ListAdapter<T, DataBindingRecyclerViewHolder>(callback) {
 
@@ -30,7 +30,7 @@ class RecyclerViewAdapter<T : ListItem>(
         position: Int,
     ) {
         holder.binding.apply {
-            setVariable(BR.listItem, getItem(position))
+            setVariable(itemVariableId, getItem(position))
             executePendingBindings()
         }
     }

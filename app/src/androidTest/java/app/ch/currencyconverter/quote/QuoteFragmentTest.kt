@@ -14,6 +14,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import app.ch.currencyconverter.FileReader
 import app.ch.currencyconverter.R
+import app.ch.currencyconverter.core.Constants.KEY_CODE
+import app.ch.currencyconverter.core.Constants.REQUEST_CURRENCY
 import app.ch.currencyconverter.core.di.repository.LocalDataModule
 import app.ch.currencyconverter.hasItemAtPosition
 import app.ch.currencyconverter.ktx.launchNavFragment
@@ -32,7 +34,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
-
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
@@ -104,7 +105,7 @@ class QuoteFragmentTest {
         mockWebServerRule.mockSuccess()
         launchNavFragment<QuoteFragment, QuoteViewModel>(navController) {
             it.parentFragmentManager
-                .setFragmentResult("currencyCode", bundleOf("code" to "HKD"))
+                .setFragmentResult(REQUEST_CURRENCY, bundleOf(KEY_CODE to "HKD"))
         }
 
         onView(withId(R.id.tvSelectedCurrency))

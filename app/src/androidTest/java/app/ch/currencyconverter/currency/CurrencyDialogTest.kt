@@ -10,6 +10,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import app.ch.currencyconverter.R
+import app.ch.currencyconverter.core.Constants.KEY_CODE
+import app.ch.currencyconverter.core.Constants.REQUEST_CURRENCY
 import app.ch.currencyconverter.core.di.repository.LocalDataModule
 import app.ch.currencyconverter.ktx.launchNavFragment
 import app.ch.currencyconverter.mockserver.MockWebServerRule
@@ -49,8 +51,8 @@ class CurrencyDialogTest {
             it.run { navController.setCurrentDestination(R.id.currency) }
 
             it.parentFragmentManager
-                .setFragmentResultListener("requestKey", it.viewLifecycleOwner) { _, bundle ->
-                    expectThat(bundle.getString("code")).isEqualTo("ANG")
+                .setFragmentResultListener(REQUEST_CURRENCY, it.viewLifecycleOwner) { _, bundle ->
+                    expectThat(bundle.getString(KEY_CODE)).isEqualTo("ANG")
                 }
         }
 

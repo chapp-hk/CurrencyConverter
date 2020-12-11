@@ -8,7 +8,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import app.ch.currencyconverter.BR
 import app.ch.currencyconverter.R
+import app.ch.currencyconverter.core.Constants.KEY_CODE
+import app.ch.currencyconverter.core.Constants.REQUEST_CURRENCY
 import app.ch.currencyconverter.core.recyclerview.RecyclerViewAdapter
 import app.ch.currencyconverter.databinding.DialogCurrencyBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,7 +22,7 @@ import kotlinx.coroutines.flow.collectLatest
 class CurrencyDialog : BottomSheetDialogFragment() {
 
     private val viewModel by viewModels<CurrencyViewModel>()
-    private val adapter = RecyclerViewAdapter<CurrencyListItem>()
+    private val adapter = RecyclerViewAdapter<CurrencyListItem>(BR.listItem)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +61,7 @@ class CurrencyDialog : BottomSheetDialogFragment() {
     }
 
     private fun currencySelected(code: String) {
-        setFragmentResult("currencyCode", bundleOf("code" to code))
+        setFragmentResult(REQUEST_CURRENCY, bundleOf(KEY_CODE to code))
         dismiss()
     }
 }

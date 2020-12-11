@@ -8,8 +8,11 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import app.ch.currencyconverter.BR
 import app.ch.currencyconverter.R
 import app.ch.currencyconverter.core.Constants.ERROR_NETWORK
+import app.ch.currencyconverter.core.Constants.KEY_CODE
+import app.ch.currencyconverter.core.Constants.REQUEST_CURRENCY
 import app.ch.currencyconverter.core.recyclerview.RecyclerViewAdapter
 import app.ch.currencyconverter.databinding.FragmentQuoteBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +22,7 @@ import kotlinx.coroutines.flow.collectLatest
 class QuoteFragment : Fragment(R.layout.fragment_quote) {
 
     private val viewModel by viewModels<QuoteViewModel>()
-    private val adapter = RecyclerViewAdapter<QuoteListItem>()
+    private val adapter = RecyclerViewAdapter<QuoteListItem>(BR.listItem)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +51,7 @@ class QuoteFragment : Fragment(R.layout.fragment_quote) {
     }
 
     private fun registerEventObserver() {
-        setFragmentResultListener("currencyCode", ::handleFragmentResult)
+        setFragmentResultListener(REQUEST_CURRENCY, ::handleFragmentResult)
 
         viewModel.errorEvent.observe(
             viewLifecycleOwner,
@@ -58,7 +61,7 @@ class QuoteFragment : Fragment(R.layout.fragment_quote) {
 
     private fun handleFragmentResult(requestKey: String, bundle: Bundle) {
         when (requestKey) {
-            "currencyCode" -> viewModel.updateCurrencyCode(bundle.getString("code", ""))
+            REQUEST_CURRENCY -> viewModel.updateCurrencyCode(bundle.getString(KEY_CODE, ""))
         }
     }
 
