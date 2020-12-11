@@ -71,11 +71,13 @@ constructor(
         codes: List<CurrencyCode>,
         quotes: Map<String, BigDecimal>,
     ) {
+        val targetQuote = quotes[getQuoteKey(_selectedCode.value)]
+
         codes.map { currencyCode ->
             currencyConverter.execute(
-                quotes[getQuoteKey(currencyCode.code)],
-                quotes[getQuoteKey(_selectedCode.value)],
-                amount.value?.toBigDecimalOrNull(),
+                srcRate = quotes[getQuoteKey(currencyCode.code)],
+                dstRate = targetQuote,
+                amount = amount.value?.toBigDecimalOrNull(),
             ).let {
                 QuoteListItem(
                     currencyCode.code,

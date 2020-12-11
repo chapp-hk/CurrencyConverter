@@ -53,7 +53,7 @@ constructor(
     }
 
     private fun getFromLocal(quotes: List<QuoteEntity>): Result<Map<String, BigDecimal>, Error> {
-        return hashMapOf<String, BigDecimal>()
+        return mutableMapOf<String, BigDecimal>()
             .apply { quotes.forEach { this[it.mapping] = it.rate } }
             .let { Result.Success(it) }
     }
