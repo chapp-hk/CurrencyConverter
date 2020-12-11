@@ -1,5 +1,6 @@
 package app.ch.currencyconverter.currency
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.ch.currencyconverter.MainCoroutineRule
 import app.ch.currencyconverter.domain.base.Result
 import app.ch.currencyconverter.domain.currency.entity.CurrencyCode
@@ -19,6 +20,9 @@ class CurrencyViewModelTest {
     @ExperimentalCoroutinesApi
     @get:Rule
     val coroutineRule = MainCoroutineRule()
+
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @MockK
     private lateinit var getCurrencyCodesUsecase: GetCurrencyCodesUsecase

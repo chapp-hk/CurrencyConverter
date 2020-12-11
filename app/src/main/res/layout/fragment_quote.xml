@@ -31,7 +31,7 @@
             android:text="@={viewModel.amount}" />
 
         <TextView
-            android:id="@+id/tvSelectCurrency"
+            android:id="@+id/tvSelectedCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/btnChange"

@@ -1,4 +1,4 @@
-package app.ch.currencyconverter
+package app.ch.currencyconverter.ktx
 
 import android.content.ComponentName
 import android.content.Intent
@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import app.ch.currencyconverter.HiltTestActivity
+import app.ch.currencyconverter.R
 
 /**
  * launchFragmentInContainer from the androidx.fragment:fragment-testing library

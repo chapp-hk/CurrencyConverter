@@ -1,5 +1,6 @@
 package app.ch.currencyconverter.mockserver
 
+import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
@@ -18,11 +19,15 @@ class MockWebServerRule : TestWatcher() {
         mockWebServer.shutdown()
     }
 
-    fun mockSuccess() {
-        mockWebServer.dispatcher = SuccessDispatcher()
+    fun mockSuccess(dispatcher: Dispatcher = SimpleSuccessDispatcher()) {
+        mockWebServer.dispatcher = dispatcher
     }
 
     fun mockFailure() {
         mockWebServer.dispatcher = FailureDispatcher()
+    }
+
+    fun mockCustomResponse(dispatcher: Dispatcher) {
+        mockWebServer.dispatcher = dispatcher
     }
 }
