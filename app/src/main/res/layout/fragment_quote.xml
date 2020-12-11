@@ -38,6 +38,8 @@
             android:layout_alignBottom="@+id/btnChange"
             android:gravity="center_vertical"
             android:text="@{viewModel.selectedCode}"
+            android:textSize="@dimen/textSizeLarge"
+            android:textStyle="bold"
             tools:text="HKD" />
 
         <Button

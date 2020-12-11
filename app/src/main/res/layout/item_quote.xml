@@ -13,29 +13,30 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_round"
         android:layout_margin="1dp"
+        android:background="@drawable/background_round"
         android:padding="@dimen/spacing">
-
-        <TextView
-            android:id="@+id/tvCode"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center_horizontal"
-            android:text="@{listItem.code}"
-            app:layout_constraintDimensionRatio="H,1:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="HKD" />
 
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center_horizontal"
             android:text="@{listItem.description}"
-            app:layout_constraintBottom_toTopOf="@+id/tvQuote"
+            android:textSize="@dimen/textSizeSmall"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Hong Kong" />
+
+        <TextView
+            android:id="@+id/tvCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@{listItem.code}"
+            app:layout_constraintBottom_toTopOf="@+id/tvQuote"
+            tools:text="HKD" />
 
         <TextView
             android:id="@+id/tvQuote"
@@ -43,8 +44,9 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@{listItem.quote}"
+            android:textSize="@dimen/textSizeSmall"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/tvCode"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDescription"
             tools:text="1234" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
