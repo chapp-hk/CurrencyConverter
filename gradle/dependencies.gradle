@@ -12,6 +12,7 @@ deps.androidx.core = "androidx.core:core-ktx:$versions.androidx_core"
 deps.androidx.core_test = "androidx.arch.core:core-testing:$versions.androidx_core_test"
 deps.androidx.appcompat = "androidx.appcompat:appcompat:$versions.androidx_appcompat"
 deps.androidx.fragment = "androidx.fragment:fragment-ktx:$versions.androidx_fragment"
+deps.androidx.fragment_testing = "androidx.fragment:fragment-testing:1.3.0-beta01"
 deps.androidx.constraint_layout = "androidx.constraintlayout:constraintlayout:$versions.androidx_constraint_layout"
 deps.androidx.lifecycle_core =  "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidx_lifecycle"
 deps.androidx.lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidx_lifecycle"
@@ -35,11 +36,13 @@ deps.hilt.core = "com.google.dagger:hilt-android:$versions.hilt"
 deps.hilt.dagger_compiler = "com.google.dagger:hilt-android-compiler:$versions.hilt"
 deps.hilt.lifecycle_viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hilt_jetpack"
 deps.hilt.lifecycle_compiler = "androidx.hilt:hilt-compiler:$versions.hilt_jetpack"
+deps.hilt.android_testing = "com.google.dagger:hilt-android-testing:$versions.hilt"
 
 deps.navigation = [:]
 deps.navigation.gradle_plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
 deps.navigation.fragment = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
 deps.navigation.ui = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+deps.navigation.testing = "androidx.navigation:navigation-testing:$versions.navigation"
 
 deps.timber = [:]
 deps.timber.core = "com.jakewharton.timber:timber:$versions.timber"
@@ -49,7 +52,8 @@ deps.retrofit.core = "com.squareup.retrofit2:retrofit:$versions.retrofit"
 deps.retrofit.kotlin_serialization_converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.retrofit_kotlin_serialization_converter"
 
 deps.okhttp = [:]
-deps.okhttp.logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor"
+deps.okhttp.logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+deps.okhttp.mock_web_server = "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
 
 deps.room = [:]
 deps.room.core = "androidx.room:room-runtime:$versions.room"
@@ -61,3 +65,10 @@ deps.test.junit = "junit:junit:$versions.junit"
 deps.test.mockk = "io.mockk:mockk:$versions.mockk"
 deps.test.strikt = "io.strikt:strikt-core:$versions.strikt"
 deps.test.livedata = "com.jraska.livedata:testing-ktx:$versions.test_livedata"
+
+deps.androidx.test = [:]
+deps.androidx.test.core = "androidx.test:core-ktx:$versions.androidx_test"
+deps.androidx.test.ext = "androidx.test.ext:junit-ktx:$versions.androidx_test_ext"
+deps.androidx.test.rules = "androidx.test:rules:$versions.androidx_test"
+deps.androidx.test.espresso_core = "androidx.test.espresso:espresso-core:$versions.androidx_espresso"
+deps.androidx.test.expresso_contrib = "androidx.test.espresso:espresso-contrib:$versions.androidx_espresso"
