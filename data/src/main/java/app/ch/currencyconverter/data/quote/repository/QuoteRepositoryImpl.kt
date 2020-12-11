@@ -34,7 +34,6 @@ constructor(
                 if (response.success) {
                     response.also { persistDataToLocal(it) }
                         .quotes
-                        .mapValues { BigDecimal(it.value) }
                         .let { Result.Success(it) }
                 } else {
                     Result.Failure(Error.ResponseError(response.errorResponse.code))
@@ -55,7 +54,7 @@ constructor(
 
     private fun getFromLocal(quotes: List<QuoteEntity>): Result<Map<String, BigDecimal>, Error> {
         return hashMapOf<String, BigDecimal>()
-            .apply { quotes.forEach { this[it.mapping] = BigDecimal(it.rate) } }
+            .apply { quotes.forEach { this[it.mapping] = it.rate } }
             .let { Result.Success(it) }
     }
 }

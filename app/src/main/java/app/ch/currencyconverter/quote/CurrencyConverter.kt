@@ -6,15 +6,13 @@ import javax.inject.Inject
 
 class CurrencyConverter @Inject constructor() {
 
-    private val default = 1.0.toBigDecimal()
-
     fun execute(
         srcRate: BigDecimal?,
         dstRate: BigDecimal?,
         amount: BigDecimal?,
     ): String {
         return calculate(srcRate, dstRate, amount)
-            .setScale(5, RoundingMode.CEILING).stripTrailingZeros().toString()
+            .setScale(6, RoundingMode.CEILING).stripTrailingZeros().toString()
     }
 
     private fun calculate(
@@ -22,6 +20,7 @@ class CurrencyConverter @Inject constructor() {
         dstRate: BigDecimal?,
         amount: BigDecimal?,
     ): BigDecimal {
-        return (srcRate ?: default) / (dstRate ?: default) * (amount ?: default)
+        val safeDstRate = dstRate.takeIf { it != BigDecimal.ZERO } ?: BigDecimal.ONE
+        return (srcRate ?: BigDecimal.ONE) / safeDstRate * (amount ?: BigDecimal.ONE)
     }
 }

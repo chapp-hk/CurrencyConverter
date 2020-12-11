@@ -49,10 +49,7 @@ class CurrencyDialogTest {
             it.run { navController.setCurrentDestination(R.id.currency) }
 
             it.parentFragmentManager
-                .setFragmentResultListener(
-                    "requestKey",
-                    it.viewLifecycleOwner
-                ) { _, bundle ->
+                .setFragmentResultListener("requestKey", it.viewLifecycleOwner) { _, bundle ->
                     expectThat(bundle.getString("code")).isEqualTo("ANG")
                 }
         }

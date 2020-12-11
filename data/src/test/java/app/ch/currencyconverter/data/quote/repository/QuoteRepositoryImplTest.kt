@@ -48,7 +48,7 @@ class QuoteRepositoryImplTest {
     @Test
     fun `local is empty and get from remote success`() {
         every { quoteResponse.success } returns true
-        every { quoteResponse.quotes } returns mapOf("mapping" to 1.0)
+        every { quoteResponse.quotes } returns mapOf("mapping" to BigDecimal.ONE)
         coEvery { quoteDao.getAll() } returns emptyList()
 
         runBlocking {
@@ -65,7 +65,7 @@ class QuoteRepositoryImplTest {
             localStore.saveLastQuoteTimeMillis(any())
             quoteDao.deleteAll()
             quoteDao.insertAll(
-                mapOf("mapping" to 1.0)
+                mapOf("mapping" to BigDecimal.ONE)
                     .map { QuoteEntity(it.key, it.value) }
             )
         }
@@ -77,7 +77,7 @@ class QuoteRepositoryImplTest {
     @Test
     fun `local is expired and get from remote success`() {
         every { quoteResponse.success } returns true
-        every { quoteResponse.quotes } returns mapOf("mapping" to 1.0)
+        every { quoteResponse.quotes } returns mapOf("mapping" to BigDecimal.ONE)
         every { localStore.isQuoteExpired() } returns true
         coEvery { quoteDao.getAll() } returns listOf(QuoteEntity())
 
@@ -96,7 +96,7 @@ class QuoteRepositoryImplTest {
             localStore.saveLastQuoteTimeMillis(any())
             quoteDao.deleteAll()
             quoteDao.insertAll(
-                mapOf("mapping" to 1.0)
+                mapOf("mapping" to BigDecimal.ONE)
                     .map { QuoteEntity(it.key, it.value) }
             )
         }
@@ -148,14 +148,14 @@ class QuoteRepositoryImplTest {
     @Test
     fun `get from local`() {
         every { localStore.isQuoteExpired() } returns false
-        coEvery { quoteDao.getAll() } returns listOf(QuoteEntity("mapping", 3.0))
+        coEvery { quoteDao.getAll() } returns listOf(QuoteEntity("mapping", 3.0.toBigDecimal()))
 
         runBlocking {
             val result = quoteRepository.getCurrencyQuotes()
 
             expectThat(result).isA<Result.Success<Map<String, BigDecimal>>>()
                 .get { data }
-                .isEqualTo(mapOf("mapping" to BigDecimal(3.0)))
+                .isEqualTo(mapOf("mapping" to 3.0.toBigDecimal()))
         }
 
         coVerify(exactly = 0) {
