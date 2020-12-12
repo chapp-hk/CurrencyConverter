@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.ch.currencyconverter.core.Constants.ERROR_NETWORK
-import app.ch.currencyconverter.core.lifecycle.LoadingState
 import app.ch.currencyconverter.core.lifecycle.OneOffEvent
 import app.ch.currencyconverter.domain.base.Error
 import app.ch.currencyconverter.domain.base.Result
@@ -23,7 +22,7 @@ constructor(
     private val getCurrencyCodesUsecase: GetCurrencyCodesUsecase,
     private val getCurrencyQuotesUsecase: GetCurrencyQuotesUsecase,
     private val currencyConverter: CurrencyConverter,
-) : ViewModel(), LoadingState {
+) : ViewModel() {
 
     private val defaultCode = "USD"
 
@@ -38,16 +37,12 @@ constructor(
     private val _quoteList = MutableStateFlow<List<QuoteListItem>>(listOf())
     val quoteList: StateFlow<List<QuoteListItem>> = _quoteList
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    override val isLoading = _isLoading
-
     fun updateCurrencyCode(code: String) {
         _selectedCode.value = code
         getQuotes()
     }
 
     fun getQuotes() {
-        _isLoading.value = true
         viewModelScope.launch {
             getCurrencyCodesUsecase.execute().let {
                 when (it) {
@@ -87,7 +82,6 @@ constructor(
             }
         }.let {
             _quoteList.value = it
-            _isLoading.value = false
         }
     }
 
@@ -97,7 +91,6 @@ constructor(
             is Error.ResponseError -> error.errorCode
         }.let {
             _errorEvent.value = OneOffEvent(it)
-            _isLoading.value = false
         }
     }
 

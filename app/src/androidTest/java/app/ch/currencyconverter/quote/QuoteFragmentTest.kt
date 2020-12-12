@@ -63,13 +63,14 @@ class QuoteFragmentTest {
     @Test
     fun change_amount_refresh_quotes() {
         mockWebServerRule.mockSuccess()
-        launchNavFragment<QuoteFragment, QuoteViewModel>(navController)
+        launchNavFragment<QuoteFragment>(navController)
 
         val initQuote = currencyConverter.execute(
             srcRate = 3.672969.toBigDecimal(),
             dstRate = 1.toBigDecimal(),
             amount = 1.toBigDecimal(),
         )
+        Thread.sleep(500)
         onView(withId(R.id.recyclerView)).check(
             matches(
                 hasItemAtPosition(
@@ -88,6 +89,7 @@ class QuoteFragmentTest {
             dstRate = 1.toBigDecimal(),
             amount = 3.3.toBigDecimal(),
         )
+        Thread.sleep(500)
         onView(withId(R.id.recyclerView)).check(
             matches(
                 hasItemAtPosition(
@@ -103,7 +105,7 @@ class QuoteFragmentTest {
     @Test
     fun change_amount_and_currency_refresh_quotes() {
         mockWebServerRule.mockSuccess()
-        launchNavFragment<QuoteFragment, QuoteViewModel>(navController) {
+        launchNavFragment<QuoteFragment>(navController) {
             it.parentFragmentManager
                 .setFragmentResult(REQUEST_CURRENCY, bundleOf(KEY_CODE to "HKD"))
         }
@@ -119,6 +121,7 @@ class QuoteFragmentTest {
             dstRate = 7.75155.toBigDecimal(),
             amount = 10.toBigDecimal(),
         )
+        Thread.sleep(500)
         onView(withId(R.id.recyclerView)).check(
             matches(
                 hasItemAtPosition(
@@ -134,10 +137,7 @@ class QuoteFragmentTest {
     @Test
     fun assert_select_currency_navigation() {
         mockWebServerRule.mockSuccess()
-        launchNavFragment<QuoteFragment, QuoteViewModel>(
-            navController = navController,
-            withIdling = false
-        )
+        launchNavFragment<QuoteFragment>(navController)
 
         onView(withId(R.id.btnChange)).perform(click())
         expectThat(navController.currentDestination?.id).isEqualTo(R.id.currency)
@@ -146,14 +146,13 @@ class QuoteFragmentTest {
     @Test
     fun show_error_toast_when_currency_code_returns_error() {
         mockWebServerRule.mockFailure()
-        launchNavFragment<QuoteFragment, QuoteViewModel>(
-            navController = navController,
-            withIdling = false
-        )
+        launchNavFragment<QuoteFragment>(navController = navController)
 
+        Thread.sleep(500)
         onView(withText(R.string.error_api))
             .inRoot(isSystemAlertWindow())
             .check(matches(isDisplayed()))
+        Thread.sleep(2000)
     }
 
     @Test
@@ -169,10 +168,12 @@ class QuoteFragmentTest {
             }
         })
 
-        launchNavFragment<QuoteFragment, QuoteViewModel>(navController)
+        launchNavFragment<QuoteFragment>(navController)
 
+        Thread.sleep(500)
         onView(withText(R.string.error_network))
             .inRoot(isSystemAlertWindow())
             .check(matches(isDisplayed()))
+        Thread.sleep(2000)
     }
 }

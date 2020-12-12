@@ -47,7 +47,7 @@ class CurrencyDialogTest {
     @Test
     fun select_currency() {
         mockWebServerRule.mockSuccess()
-        launchNavFragment<CurrencyDialog, CurrencyViewModel>(navController) {
+        launchNavFragment<CurrencyDialog>(navController) {
             it.run { navController.setCurrentDestination(R.id.currency) }
 
             it.parentFragmentManager
@@ -56,6 +56,7 @@ class CurrencyDialogTest {
                 }
         }
 
+        Thread.sleep(500)
         onView(withId(R.id.recyclerView))
             .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(4, click()))
     }
