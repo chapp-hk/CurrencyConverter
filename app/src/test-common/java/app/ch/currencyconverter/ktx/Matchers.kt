@@ -1,4 +1,4 @@
-package app.ch.currencyconverter
+package app.ch.currencyconverter.ktx
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

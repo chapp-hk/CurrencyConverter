@@ -12,12 +12,12 @@ import androidx.test.espresso.matcher.RootMatchers.isSystemAlertWindow
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import app.ch.currencyconverter.FileReader
+import app.ch.currencyconverter.mockserver.FileReader
 import app.ch.currencyconverter.R
 import app.ch.currencyconverter.core.Constants.KEY_CODE
 import app.ch.currencyconverter.core.Constants.REQUEST_CURRENCY
 import app.ch.currencyconverter.core.di.repository.LocalDataModule
-import app.ch.currencyconverter.hasItemAtPosition
+import app.ch.currencyconverter.ktx.hasItemAtPosition
 import app.ch.currencyconverter.ktx.launchNavFragment
 import app.ch.currencyconverter.mockserver.MockWebServerRule
 import dagger.hilt.android.testing.HiltAndroidRule
