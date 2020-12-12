@@ -1,6 +1,5 @@
 package app.ch.currencyconverter.mockserver
 
-import app.ch.currencyconverter.FileReader
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest

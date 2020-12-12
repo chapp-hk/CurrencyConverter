@@ -1,4 +1,4 @@
-package app.ch.currencyconverter
+package app.ch.currencyconverter.mockserver
 
 import java.io.InputStreamReader
 
