@@ -70,7 +70,7 @@ class QuoteFragmentTest {
             dstRate = 1.toBigDecimal(),
             amount = 1.toBigDecimal(),
         )
-        Thread.sleep(500)
+        Thread.sleep(500) //FIXME: should use IdlingResource instead of Thread.sleep()
         onView(withId(R.id.recyclerView)).check(
             matches(
                 hasItemAtPosition(
@@ -89,7 +89,7 @@ class QuoteFragmentTest {
             dstRate = 1.toBigDecimal(),
             amount = 3.3.toBigDecimal(),
         )
-        Thread.sleep(500)
+        Thread.sleep(500) //FIXME: should use IdlingResource instead of Thread.sleep()
         onView(withId(R.id.recyclerView)).check(
             matches(
                 hasItemAtPosition(
@@ -121,7 +121,7 @@ class QuoteFragmentTest {
             dstRate = 7.75155.toBigDecimal(),
             amount = 10.toBigDecimal(),
         )
-        Thread.sleep(500)
+        Thread.sleep(500) //FIXME: should use IdlingResource instead of Thread.sleep()
         onView(withId(R.id.recyclerView)).check(
             matches(
                 hasItemAtPosition(
@@ -148,11 +148,11 @@ class QuoteFragmentTest {
         mockWebServerRule.mockFailure()
         launchNavFragment<QuoteFragment>(navController = navController)
 
-        Thread.sleep(500)
+        Thread.sleep(500) //FIXME: should use IdlingResource instead of Thread.sleep()
         onView(withText(R.string.error_api))
             .inRoot(isSystemAlertWindow())
             .check(matches(isDisplayed()))
-        Thread.sleep(2000)
+        Thread.sleep(2000) //FIXME: should use IdlingResource instead of Thread.sleep()
     }
 
     @Test
@@ -170,10 +170,10 @@ class QuoteFragmentTest {
 
         launchNavFragment<QuoteFragment>(navController)
 
-        Thread.sleep(500)
+        Thread.sleep(500) //FIXME: should use IdlingResource instead of Thread.sleep()
         onView(withText(R.string.error_network))
             .inRoot(isSystemAlertWindow())
             .check(matches(isDisplayed()))
-        Thread.sleep(2000)
+        Thread.sleep(2000) //FIXME: should use IdlingResource instead of Thread.sleep()
     }
 }

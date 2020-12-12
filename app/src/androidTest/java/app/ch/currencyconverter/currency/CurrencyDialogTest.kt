@@ -56,7 +56,7 @@ class CurrencyDialogTest {
                 }
         }
 
-        Thread.sleep(500)
+        Thread.sleep(500) //FIXME: should use IdlingResource instead of Thread.sleep()
         onView(withId(R.id.recyclerView))
             .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(4, click()))
     }
