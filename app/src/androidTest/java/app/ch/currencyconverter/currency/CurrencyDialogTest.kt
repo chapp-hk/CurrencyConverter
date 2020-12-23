@@ -9,6 +9,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import app.ch.currencyconverter.DisableAnimationsRule
 import app.ch.currencyconverter.R
 import app.ch.currencyconverter.core.Constants.KEY_CODE
 import app.ch.currencyconverter.core.Constants.REQUEST_CURRENCY
@@ -31,11 +32,14 @@ import strikt.assertions.isEqualTo
 @HiltAndroidTest
 class CurrencyDialogTest {
 
-    @get:Rule
-    val hiltRule = HiltAndroidRule(this)
+    @get:Rule(order = 0)
+    val disableAnimationsRule = DisableAnimationsRule()
 
-    @get:Rule
+    @get:Rule(order = 1)
     val mockWebServerRule = MockWebServerRule()
+
+    @get:Rule(order = 2)
+    val hiltRule = HiltAndroidRule(this)
 
     private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
 

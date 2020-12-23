@@ -72,3 +72,4 @@ deps.androidx.test.ext = "androidx.test.ext:junit-ktx:$versions.androidx_test_ex
 deps.androidx.test.rules = "androidx.test:rules:$versions.androidx_test"
 deps.androidx.test.espresso_core = "androidx.test.espresso:espresso-core:$versions.androidx_espresso"
 deps.androidx.test.expresso_contrib = "androidx.test.espresso:espresso-contrib:$versions.androidx_espresso"
+deps.androidx.test.uiautomator = "androidx.test.uiautomator:uiautomator:$versions.androidx_test_uiautomator"

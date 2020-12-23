@@ -98,6 +98,7 @@ dependencies {
     androidTestImplementation deps.navigation.testing
     androidTestImplementation deps.test.strikt
     androidTestImplementation deps.okhttp.mock_web_server
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:2.2.0"
 
     androidTestImplementation deps.hilt.android_testing
     kaptAndroidTest deps.hilt.dagger_compiler
