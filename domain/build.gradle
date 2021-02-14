@@ -14,4 +14,7 @@ dependencies {
     implementation deps.timber.core
     implementation deps.hilt.core
     kapt deps.hilt.dagger_compiler
+
+    testImplementation deps.test.junit
+    testImplementation deps.test.mockk
 }

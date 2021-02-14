@@ -9,7 +9,7 @@ ext.buildVersions.build_tool_version = "30.0.2"
 
 //Dependencies versions
 ext.versions = [:]
-ext.versions.android_gradle_plugin = "4.1.1"
+ext.versions.android_gradle_plugin = "4.1.2"
 ext.versions.kotlin = "1.4.20"
 ext.versions.kotlin_serialization_json = "1.0.1"
 ext.versions.kotlin_coroutines = "1.4.1"
